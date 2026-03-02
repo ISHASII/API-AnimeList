@@ -1,17 +1,3 @@
-# Mini Project API
-
-REST API sederhana untuk mengelola koleksi data anime menggunakan Express.js dan MongoDB. Dilengkapi dengan dokumentasi Swagger UI.
-
----
-
-## 🔧 Prasyarat
-
-- Node.js (direkomendasikan v14 ke atas)
-- npm (termasuk dalam instalasi Node.js)
-- Instance MongoDB yang berjalan (lokal atau cloud seperti MongoDB Atlas)
-
----
-
 ## 🚀 Cara Menjalankan
 
 1. **Clone repositori** atau unduh file workspace.
@@ -85,19 +71,19 @@ Base URL: `http://localhost:3000`
 ### 1. Ambil semua anime
 
 ```bash
-curl -X GET http://localhost:3000/anime
+GET http://localhost:3000/anime
 ```
 
 ### 2. Ambil anime berdasarkan ID
 
 ```bash
-curl -X GET http://localhost:3000/anime/<mongo-object-id>
+GET http://localhost:3000/anime/<mongo-object-id>
 ```
 
 ### 3. Tambah anime baru
 
 ```bash
-curl -X POST http://localhost:3000/anime \
+POST http://localhost:3000/anime \
   -H "Content-Type: application/json" \
   -d '{
     "title": "Naruto",
@@ -110,7 +96,7 @@ curl -X POST http://localhost:3000/anime \
 ### 4. Perbarui data anime
 
 ```bash
-curl -X PUT http://localhost:3000/anime/<mongo-object-id> \
+PUT http://localhost:3000/anime/<mongo-object-id> \
   -H "Content-Type: application/json" \
   -d '{"episodes": 500}'
 ```
@@ -118,7 +104,7 @@ curl -X PUT http://localhost:3000/anime/<mongo-object-id> \
 ### 5. Hapus anime
 
 ```bash
-curl -X DELETE http://localhost:3000/anime/<mongo-object-id>
+DELETE http://localhost:3000/anime/<mongo-object-id>
 ```
 
 ---
@@ -146,9 +132,3 @@ curl -X DELETE http://localhost:3000/anime/<mongo-object-id>
 - **dotenv** - Environment variables
 
 ---
-
-## ✅ Ringkasan
-
-API ini menyediakan operasi CRUD lengkap untuk model Anime dengan dokumentasi Swagger yang interaktif. Akses `/api-docs` untuk mencoba semua endpoint langsung dari browser!
-
-Selamat berkoding! 👾

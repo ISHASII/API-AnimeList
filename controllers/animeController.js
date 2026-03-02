@@ -1,27 +1,33 @@
 const Anime = require("../models/animeModel");
 
-// dapetin semua data
-exports.getAllAnimes = async (req, res) => {
+// GET semua data
+exports.getAllAnimes = async (req, res, next) => {
   try {
     const animes = await Anime.find();
     res.status(200).json(animes);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
-// dapetin daya by id
+// GET by ID
 exports.getAnimeById = async (req, res, next) => {
   try {
     const anime = await Anime.findById(req.params.id);
-    if (!anime) return res.status(404).json({ message: "Anime not found" });
+
+    if (!anime) {
+      const err = new Error("Anime not found");
+      err.status = 404;
+      return next(err);
+    }
+
     res.status(200).json(anime);
   } catch (error) {
     next(error);
   }
 };
 
-// created data anime
+// CREATE anime
 exports.createAnime = async (req, res, next) => {
   try {
     const anime = await Anime.create(req.body);
@@ -31,24 +37,37 @@ exports.createAnime = async (req, res, next) => {
   }
 };
 
-// update data anime
+// UPDATE anime
 exports.updateAnime = async (req, res, next) => {
   try {
     const anime = await Anime.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
+      runValidators: true,
     });
-    if (!anime) return res.status(404).json({ message: "Anime not found" });
+
+    if (!anime) {
+      const err = new Error("Anime not found");
+      err.status = 404;
+      return next(err);
+    }
+
     res.status(200).json(anime);
   } catch (error) {
     next(error);
   }
 };
 
-// delete data anime
+// DELETE anime
 exports.deleteAnime = async (req, res, next) => {
   try {
     const anime = await Anime.findByIdAndDelete(req.params.id);
-    if (!anime) return res.status(404).json({ message: "Anime not found" });
+
+    if (!anime) {
+      const err = new Error("Anime not found");
+      err.status = 404;
+      return next(err);
+    }
+
     res.status(200).json({ message: "Anime deleted successfully" });
   } catch (error) {
     next(error);

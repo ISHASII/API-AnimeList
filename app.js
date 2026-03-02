@@ -27,6 +27,31 @@ app.get("/", (req, res) => {
   });
 });
 
+// ERROR HANDLER
+app.use((err, req, res, next) => {
+  console.error(err);
+
+  // mongoose validation error
+  if (err.name === "ValidationError") {
+    return res.status(400).json({
+      message: "Validation Error",
+      errors: err.errors,
+    });
+  }
+
+  // invalid ObjectId format
+  if (err.name === "CastError") {
+    return res.status(400).json({
+      message: "Invalid ID format",
+    });
+  }
+
+  res.status(err.status || 500).json({
+    message: err.message || "Internal Server Error",
+  });
+});
+
+// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
